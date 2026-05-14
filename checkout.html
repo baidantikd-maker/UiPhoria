@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Checkout — UIPHORIA MARKETPLACE</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    .checkout-page {
+      padding-top: 140px;
+      padding-bottom: 80px;
+    }
+
+    .checkout-layout {
+      display: grid;
+      grid-template-columns: 1.2fr 1fr;
+      gap: 60px;
+      align-items: start;
+    }
+
+    .checkout-title {
+      font-size: 2.5rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .checkout-subtitle {
+      color: var(--color-text-muted);
+      margin-bottom: 2.5rem;
+    }
+
+    .checkout-section {
+      margin-bottom: 2rem;
+    }
+
+    .checkout-section h3 {
+      font-size: 1.2rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 1rem;
+      color: var(--color-text-muted);
+    }
+
+    .checkout-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+    }
+
+    .checkout-grid .full {
+      grid-column: 1 / -1;
+    }
+
+    .checkout-field {
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
+    }
+
+    .checkout-field label {
+      font-size: 0.8rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .checkout-field input,
+    .checkout-field select {
+      padding: 0.85rem 1rem;
+      border: 1px solid var(--color-border);
+      border-radius: 12px;
+      font-family: var(--font-body);
+      font-size: 0.95rem;
+      background: var(--color-white);
+      transition: var(--transition-smooth);
+    }
+
+    .checkout-field input:focus,
+    .checkout-field select:focus {
+      outline: none;
+      border-color: var(--color-text);
+    }
+
+    .order-summary {
+      background: var(--color-glass);
+      backdrop-filter: blur(15px);
+      border: 1px solid var(--color-border);
+      border-radius: 24px;
+      padding: 32px;
+      position: sticky;
+      top: 120px;
+    }
+
+    .order-summary h3 {
+      font-size: 1.2rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 1.5rem;
+      color: var(--color-text-muted);
+    }
+
+    .order-item {
+      display: flex;
+      gap: 16px;
+      padding: 1rem 0;
+      border-bottom: 1px solid var(--color-border);
+    }
+
+    .order-item:last-of-type {
+      border-bottom: none;
+    }
+
+    .order-item-img {
+      width: 64px;
+      height: 64px;
+      border-radius: 12px;
+      background-size: cover;
+      background-position: center;
+      flex-shrink: 0;
+    }
+
+    .order-item-info {
+      flex: 1;
+    }
+
+    .order-item-info h4 {
+      font-size: 1rem;
+      margin-bottom: 0.25rem;
+    }
+
+    .order-item-info p {
+      font-size: 0.85rem;
+      color: var(--color-text-muted);
+    }
+
+    .order-item-price {
+      font-weight: 700;
+      font-size: 1rem;
+      white-space: nowrap;
+    }
+
+    .order-totals {
+      margin-top: 1.5rem;
+      padding-top: 1.5rem;
+      border-top: 2px solid var(--color-text);
+    }
+
+    .order-totals > div {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 0.75rem;
+      font-size: 0.95rem;
+    }
+
+    .order-totals .total {
+      font-size: 1.4rem;
+      font-weight: 800;
+      margin-top: 0.5rem;
+      padding-top: 0.75rem;
+      border-top: 1px solid var(--color-border);
+    }
+
+    .btn-checkout {
+      width: 100%;
+      padding: 1.1rem;
+      background: var(--color-text);
+      color: var(--color-white);
+      border: none;
+      border-radius: 12px;
+      font-weight: 700;
+      font-size: 1.1rem;
+      cursor: pointer;
+      transition: var(--transition-smooth);
+      margin-top: 1.5rem;
+    }
+
+    .btn-checkout:hover {
+      background: #10B981;
+      transform: translateY(-2px);
+    }
+
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--color-text-muted);
+      margin-bottom: 2rem;
+    }
+
+    .back-link:hover {
+      color: var(--color-text);
+    }
+
+    @media (max-width: 768px) {
+      .checkout-layout {
+        grid-template-columns: 1fr;
+      }
+      .checkout-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header class="nav-header" id="nav-header">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo" id="logo-link">UIPHORIA</a>
+      <nav class="nav-links" id="main-nav" aria-label="Main navigation">
+        <a href="index.html#products" class="nav-link">Products</a>
+        <a href="index.html#faq" class="nav-link">FAQ</a>
+        <a href="wishlist.html" class="nav-link" style="color: #FF4B4B; font-weight: 700;">WISHLIST</a>
+      </nav>
+      <a href="checkout.html" class="btn-nav" id="nav-cta">GO TO CHECKOUT</a>
+      <button class="nav-hamburger" id="nav-hamburger" aria-label="Toggle menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+    <div class="nav-mobile-menu" id="nav-mobile-menu">
+      <a href="index.html#products">Products</a>
+      <a href="index.html#faq">FAQ</a>
+      <a href="wishlist.html" style="color: #FF4B4B; font-weight: 700;">WISHLIST</a>
+      <a href="checkout.html" class="btn-nav-mobile">GO TO CHECKOUT</a>
+    </div>
+  </header>
+
+  <main>
+    <section class="checkout-page section-inner">
+      <a href="index.html" class="back-link">&larr; Back to Marketplace</a>
+      <h1 class="checkout-title">Checkout</h1>
+      <p class="checkout-subtitle">Complete your order. All transactions are secure and encrypted.</p>
+
+      <div class="checkout-layout">
+        <!-- Billing Form -->
+        <div>
+          <div class="checkout-section">
+            <h3>Contact Information</h3>
+            <div class="checkout-grid">
+              <div class="checkout-field full">
+                <label for="email">Email address</label>
+                <input type="email" id="email" placeholder="jane@company.com" />
+              </div>
+              <div class="checkout-field full">
+                <label for="phone">Phone number</label>
+                <input type="tel" id="phone" placeholder="+1 (555) 000-0000" />
+              </div>
+            </div>
+          </div>
+
+          <div class="checkout-section">
+            <h3>Shipping Address</h3>
+            <div class="checkout-grid">
+              <div class="checkout-field full">
+                <label for="address">Street address</label>
+                <input type="text" id="address" placeholder="123 Main Street" />
+              </div>
+              <div class="checkout-field">
+                <label for="city">City</label>
+                <input type="text" id="city" placeholder="New York" />
+              </div>
+              <div class="checkout-field">
+                <label for="state">State</label>
+                <input type="text" id="state" placeholder="NY" />
+              </div>
+              <div class="checkout-field">
+                <label for="zip">ZIP code</label>
+                <input type="text" id="zip" placeholder="10001" />
+              </div>
+              <div class="checkout-field">
+                <label for="country">Country</label>
+                <select id="country">
+                  <option>United States</option>
+                  <option>Canada</option>
+                  <option>United Kingdom</option>
+                  <option>Australia</option>
+                  <option>India</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <div class="checkout-section">
+            <h3>Payment Method</h3>
+            <div class="checkout-grid">
+              <div class="checkout-field full">
+                <label for="card">Card number</label>
+                <input type="text" id="card" placeholder="4242 4242 4242 4242" />
+              </div>
+              <div class="checkout-field">
+                <label for="expiry">Expiry</label>
+                <input type="text" id="expiry" placeholder="MM/YY" />
+              </div>
+              <div class="checkout-field">
+                <label for="cvv">CVV</label>
+                <input type="text" id="cvv" placeholder="123" />
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Order Summary -->
+          <div class="order-summary">
+          <h3>Your Order</h3>
+
+          <div id="wishlist-items"></div>
+
+          <div class="order-totals" id="order-totals" style="display:none;">
+            <div>
+              <span>Subtotal</span>
+              <span id="subtotal">$0.00</span>
+            </div>
+            <div>
+              <span>Shipping</span>
+              <span>$0.00</span>
+            </div>
+            <div>
+              <span>Tax (8%)</span>
+              <span id="tax">$0.00</span>
+            </div>
+            <div class="total">
+              <span>Total</span>
+              <span id="total" style="color: #FF8C00;">$0.00</span>
+            </div>
+          </div>
+
+          <button class="btn-checkout" id="place-order-btn">Place Order</button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer" id="site-footer" style="background: transparent; border-top: 1px solid var(--color-border);">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <a href="index.html" class="footer-logo">UIPHORIA</a>
+        <p class="footer-tagline">Innovation, technology, and growth for the creators of tomorrow.</p>
+      </div>
+      <div class="footer-nav-group">
+        <h4 class="footer-nav-heading">Platform</h4>
+        <ul class="footer-nav-list">
+          <li><a href="index.html#products">Products</a></li>
+        </ul>
+      </div>
+      <div class="footer-nav-group">
+        <h4 class="footer-nav-heading">Company</h4>
+        <ul class="footer-nav-list">
+          <li><a href="index.html#faq">FAQ</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-brand-block" style="max-width: 1200px; margin: 0 auto;">
+      <div class="footer-brand-text">UIPHORIA</div>
+      <div class="footer-copy">&copy; 2026 UIPHORIA MARKETPLACE. All rights reserved.</div>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+  <script>
+    const productData = {
+      "gaming-mouse":   { name: "Gaming Mouse",     price: 4500.00,  image: "mouse.jpg", badge: "Gaming" },
+      "bass-headphones":{ name: "Bass Headphones",   price: 12000.00, image: "jb.jpg",    badge: "Audio" },
+      "gaming-keyboard":{ name: "Gaming Keyboard",   price: 6500.00,  image: "rgb.jpg",   badge: "Gaming" },
+      "gaming-monitor": { name: "Gaming Monitor",    price: 8400.00,  image: "gm.jpg",    badge: "Gaming" },
+      "quantum-compute":{ name: "Smart Watch",         price: 3500.00,  image: "sm.jpg",   badge: "Wearable" },
+      "biomod":         { name: "Gaming CPU",         price: 18000.00, image: "cpu.jpg",   badge: "Hardware" }
+    };
+
+    function getWishlist() {
+      try { return JSON.parse(localStorage.getItem('wishlist') || '[]'); }
+      catch { return []; }
+    }
+
+    function fmt(num) {
+      return '₹' + num.toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    }
+
+    function renderCheckout() {
+      const ids = getWishlist();
+      const container = document.getElementById('wishlist-items');
+      const totals = document.getElementById('order-totals');
+
+      if (ids.length === 0) {
+        container.innerHTML = '<p style="color: var(--color-text-muted); text-align: center; padding: 2rem 0;">Your wishlist is empty. <a href="index.html#products" style="color: #3B82F6; font-weight: 600;">Browse products</a></p>';
+        totals.style.display = 'none';
+        document.getElementById('place-order-btn').style.display = 'none';
+        return;
+      }
+
+      totals.style.display = 'block';
+      document.getElementById('place-order-btn').style.display = 'block';
+
+      let subtotal = 0;
+      let html = '';
+      ids.forEach(id => {
+        const p = productData[id];
+        if (!p) return;
+        subtotal += p.price;
+        const imgStyle = p.image ? `background-image: url('${p.image}');` : 'background: var(--color-border);';
+        html += '<div class="order-item">' +
+          '<div class="order-item-img" style="' + imgStyle + ' background-size: cover; background-position: center;"></div>' +
+          '<div class="order-item-info">' +
+          '<h4>' + p.name + '</h4>' +
+          '<p>' + p.badge + ' &middot; Qty: 1</p>' +
+          '</div>' +
+          '<div class="order-item-price">' + fmt(p.price) + '</div>' +
+          '</div>';
+      });
+      container.innerHTML = html;
+
+      const tax = subtotal * 0.08;
+      const total = subtotal + tax;
+      document.getElementById('subtotal').textContent = fmt(subtotal);
+      document.getElementById('tax').textContent = fmt(tax);
+      document.getElementById('total').textContent = fmt(total);
+    }
+
+    renderCheckout();
+
+    document.getElementById('place-order-btn')?.addEventListener('click', function() {
+      const btn = this;
+      btn.textContent = 'Processing...';
+      btn.disabled = true;
+      setTimeout(() => {
+        btn.textContent = 'Order Placed!';
+        btn.style.background = '#10B981';
+        localStorage.removeItem('wishlist');
+        setTimeout(() => {
+          window.location.href = 'index.html';
+        }, 2000);
+      }, 1500);
+    });
+  </script>
+</body>
+</html>
