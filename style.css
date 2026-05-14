@@ -270,6 +270,12 @@ section {
   font-size: clamp(3.5rem, 8vw, 6rem);
   margin-bottom: 2rem;
   letter-spacing: -0.03em;
+  animation: float 4s ease-in-out infinite;
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-12px); }
 }
 
 .hero-sub {
